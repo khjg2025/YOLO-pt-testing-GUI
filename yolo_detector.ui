@@ -1,0 +1,770 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>YoloDetectorWindow</class>
+ <widget class="QMainWindow" name="YoloDetectorWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1400</width>
+    <height>900</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>YOLO26 图片检测工具</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="main_layout">
+    <property name="spacing">
+     <number>10</number>
+    </property>
+    <property name="leftMargin">
+     <number>15</number>
+    </property>
+    <property name="topMargin">
+     <number>15</number>
+    </property>
+    <property name="rightMargin">
+     <number>15</number>
+    </property>
+    <property name="bottomMargin">
+     <number>15</number>
+    </property>
+    <item>
+     <widget class="QTabWidget" name="tabs">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="detect_tab">
+       <attribute name="title">
+        <string>🔍 检测</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="detect_layout">
+        <property name="spacing">
+         <number>10</number>
+        </property>
+        <item>
+         <layout class="QVBoxLayout" name="left_layout">
+          <property name="spacing">
+           <number>10</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="preview_rows">
+            <property name="spacing">
+             <number>10</number>
+            </property>
+            <item>
+             <widget class="QGroupBox" name="img_group">
+              <property name="title">
+               <string>模型检测结果</string>
+              </property>
+              <layout class="QHBoxLayout" name="img_inner">
+               <item>
+                <widget class="QLabel" name="image_label">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>400</width>
+                   <height>300</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border: 2px dashed #aaa; background: #f0f0f0; color: #666;</string>
+                 </property>
+                 <property name="text">
+                  <string>请先选择目录并点击检测按钮</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="label_img_group">
+              <property name="title">
+               <string>标签绘制结果</string>
+              </property>
+              <layout class="QHBoxLayout" name="label_img_inner">
+               <item>
+                <widget class="QLabel" name="label_image_label">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>400</width>
+                   <height>300</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border: 2px dashed #aaa; background: #f0f0f0; color: #666;</string>
+                 </property>
+                 <property name="text">
+                  <string>请选择标签目录</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="right_layout">
+          <property name="spacing">
+           <number>10</number>
+          </property>
+          <property name="leftMargin">
+           <number>5</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>5</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QGroupBox" name="control_group">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="title">
+             <string>控制设置</string>
+            </property>
+            <layout class="QVBoxLayout" name="control_inner">
+             <item>
+              <layout class="QHBoxLayout" name="model_row">
+               <item>
+                <widget class="QLabel" name="model_label">
+                 <property name="text">
+                  <string>模型路径:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="model_input">
+                 <property name="styleSheet">
+                  <string notr="true">color: red;</string>
+                 </property>
+                 <property name="text">
+                  <string>未加载模型</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="model_btn">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>选择模型文件 (.pt)</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="dir_row">
+               <item>
+                <widget class="QLabel" name="dir_label_text">
+                 <property name="text">
+                  <string>检测目录:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="dir_label">
+                 <property name="styleSheet">
+                  <string notr="true">color: gray;</string>
+                 </property>
+                 <property name="text">
+                  <string>未选择目录</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="dir_btn">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>116</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>选择目录</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="label_dir_row">
+               <item>
+                <widget class="QLabel" name="label_dir_label">
+                 <property name="text">
+                  <string>标签目录:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_dir_input">
+                 <property name="styleSheet">
+                  <string notr="true">color: gray;</string>
+                 </property>
+                 <property name="text">
+                  <string>未选择标签目录</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="label_dir_btn">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>选择标签目录</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="conf_row">
+               <item>
+                <widget class="QLabel" name="conf_label">
+                 <property name="text">
+                  <string>置信度阈值:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="conf_spin">
+                 <property name="suffix">
+                  <string>%</string>
+                 </property>
+                 <property name="minimum">
+                  <number>1</number>
+                 </property>
+                 <property name="maximum">
+                  <number>100</number>
+                 </property>
+                 <property name="value">
+                  <number>50</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="size_row">
+               <item>
+                <widget class="QLabel" name="size_label">
+                 <property name="text">
+                  <string>最大边长:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="img_size_spin">
+                 <property name="suffix">
+                  <string> px</string>
+                 </property>
+                 <property name="minimum">
+                  <number>320</number>
+                 </property>
+                 <property name="maximum">
+                  <number>1920</number>
+                 </property>
+                 <property name="value">
+                  <number>640</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="btn_group">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="title">
+             <string>操作</string>
+            </property>
+            <layout class="QVBoxLayout" name="btn_inner">
+             <item>
+              <layout class="QHBoxLayout" name="det_row">
+               <item>
+                <widget class="QPushButton" name="detect_btn">
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton { background-color: #4CAF50; color: white; font-size: 13px; padding: 6px 16px; border-radius: 4px; min-width: 100px; }
+QPushButton:hover { background-color: #45a049; }
+QPushButton:disabled { background-color: #ccc; }</string>
+                 </property>
+                 <property name="text">
+                  <string>🔍 批量检测</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="single_btn">
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton { background-color: #2196F3; color: white; font-size: 13px; padding: 6px 16px; border-radius: 4px; min-width: 100px; }
+QPushButton:hover { background-color: #1976D2; }
+QPushButton:disabled { background-color: #ccc; }</string>
+                 </property>
+                 <property name="text">
+                  <string>🔍 单张检测</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="nav_row">
+               <item>
+                <widget class="QPushButton" name="prev_btn">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton { background-color: #607D8B; color: white; font-size: 13px; padding: 6px 16px; border-radius: 4px; min-width: 100px; }
+QPushButton:hover { background-color: #455A64; }
+QPushButton:disabled { background-color: #90A4AE; }</string>
+                 </property>
+                 <property name="text">
+                  <string>⬅ 上一张</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="next_btn">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton { background-color: #607D8B; color: white; font-size: 13px; padding: 6px 16px; border-radius: 4px; min-width: 100px; }
+QPushButton:hover { background-color: #455A64; }
+QPushButton:disabled { background-color: #90A4AE; }</string>
+                 </property>
+                 <property name="text">
+                  <string>下一张 ➡</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="diff_row">
+               <item>
+                <widget class="QPushButton" name="diff_sort_btn">
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton { background-color: #FF9800; color: white; font-size: 13px; padding: 6px 16px; border-radius: 4px; min-width: 100px; }
+QPushButton:hover { background-color: #F57C00; }
+QPushButton:disabled { background-color: #ccc; }</string>
+                 </property>
+                 <property name="text">
+                  <string>📊 差异排序</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="display_mode_row">
+               <item>
+                <widget class="QLabel" name="display_mode_label">
+                 <property name="text">
+                  <string>显示模式:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="display_mode_combo">
+                 <item>
+                  <property name="text">
+                   <string>单模型+标签</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>双模型对比</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="info_progress_group">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="title">
+             <string/>
+            </property>
+            <layout class="QHBoxLayout" name="info_progress_inner">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="info_label">
+               <property name="styleSheet">
+                <string notr="true">font-size: 13px; color: #333;</string>
+               </property>
+               <property name="text">
+                <string>图片: -- / --</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QProgressBar" name="progress">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>300</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="value">
+                <number>0</number>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="result_group">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="title">
+             <string>检测结果</string>
+            </property>
+            <layout class="QVBoxLayout" name="result_inner">
+             <item>
+              <widget class="QTextEdit" name="result_list">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="plainText">
+                <string>等待检测...</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="history_tab">
+       <attribute name="title">
+        <string>📋 历史记录</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="history_layout">
+        <item>
+         <widget class="QListWidget" name="history_list"/>
+        </item>
+        <item>
+         <widget class="QTextEdit" name="history_detail">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="status_tab">
+       <attribute name="title">
+        <string>📊 状态</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="status_layout">
+        <item>
+         <widget class="QGroupBox" name="gpu_group">
+          <property name="title">
+           <string>GPU 状态</string>
+          </property>
+          <layout class="QHBoxLayout" name="gpu_layout">
+           <item>
+            <widget class="QLabel" name="gpu_label">
+             <property name="styleSheet">
+              <string notr="true">font-size: 13px;</string>
+             </property>
+             <property name="text">
+              <string>CUDA 不可用</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="gpu_mem_label">
+             <property name="styleSheet">
+              <string notr="true">font-size: 13px; color: #666;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="cpu_group">
+          <property name="title">
+           <string>系统资源</string>
+          </property>
+          <layout class="QHBoxLayout" name="cpu_layout">
+           <item>
+            <widget class="QLabel" name="cpu_label">
+             <property name="styleSheet">
+              <string notr="true">font-size: 13px;</string>
+             </property>
+             <property name="text">
+              <string>加载中...</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="mem_label">
+             <property name="styleSheet">
+              <string notr="true">font-size: 13px; color: #666;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="help_group">
+          <property name="title">
+           <string>快捷键</string>
+          </property>
+          <layout class="QVBoxLayout" name="help_layout">
+           <item>
+            <widget class="QLabel" name="help_label">
+             <property name="styleSheet">
+              <string notr="true">font-size: 13px; padding: 5px;</string>
+             </property>
+             <property name="text">
+              <string>📷 上一张 / 下一张  ：← / → 方向键
+🔍 单张检测          ：Ctrl + S
+🔍 批量检测          ：Ctrl + B
+📁 打开目录          ：Ctrl + O
+🚪 退出              ：Ctrl + Q</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="status_spacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1400</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_file">
+    <property name="title">
+     <string>文件</string>
+    </property>
+    <addaction name="action_open_dir"/>
+    <addaction name="separator"/>
+    <addaction name="action_exit"/>
+   </widget>
+   <widget class="QMenu" name="menu_edit">
+    <property name="title">
+     <string>编辑</string>
+    </property>
+    <addaction name="action_prev"/>
+    <addaction name="action_next"/>
+   </widget>
+   <widget class="QMenu" name="menu_detect">
+    <property name="title">
+     <string>检测</string>
+    </property>
+    <addaction name="action_single_detect"/>
+    <addaction name="action_batch_detect"/>
+   </widget>
+   <widget class="QMenu" name="menu_tools">
+    <property name="title">
+     <string>工具</string>
+    </property>
+    <addaction name="action_export_json"/>
+    <addaction name="action_export_csv"/>
+    <addaction name="separator"/>
+    <addaction name="action_clear_history"/>
+   </widget>
+   <addaction name="menu_file"/>
+   <addaction name="menu_edit"/>
+   <addaction name="menu_detect"/>
+   <addaction name="menu_tools"/>
+  </widget>
+  <action name="action_open_dir">
+   <property name="text">
+    <string>打开目录...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="action_exit">
+   <property name="text">
+    <string>退出</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="action_prev">
+   <property name="text">
+    <string>上一张</string>
+   </property>
+   <property name="shortcut">
+    <string>Left</string>
+   </property>
+  </action>
+  <action name="action_next">
+   <property name="text">
+    <string>下一张</string>
+   </property>
+   <property name="shortcut">
+    <string>Right</string>
+   </property>
+  </action>
+  <action name="action_single_detect">
+   <property name="text">
+    <string>单张检测</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="action_batch_detect">
+   <property name="text">
+    <string>批量检测</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
+   </property>
+  </action>
+  <action name="action_export_json">
+   <property name="text">
+    <string>导出结果 (JSON)</string>
+   </property>
+  </action>
+  <action name="action_export_csv">
+   <property name="text">
+    <string>导出结果 (CSV)</string>
+   </property>
+  </action>
+  <action name="action_clear_history">
+   <property name="text">
+    <string>清空历史记录</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
