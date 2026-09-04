@@ -354,7 +354,7 @@ def cv2_to_qpixmap(img_bgr):
     return QPixmap.fromImage(qimg)
 
 def draw_labels_on_image(img_bgr, label_path, class_names=None):
-    """根据 YOLO 格式标签文件在图像上绘制标签"""
+    """根据 YOLO 格式标签文件在图像上绘制标签 - 样式与模型检测一致"""
     if not os.path.exists(label_path):
         return img_bgr.copy()
     img = img_bgr.copy()
@@ -374,9 +374,17 @@ def draw_labels_on_image(img_bgr, label_path, class_names=None):
         y1 = int(y_center - height / 2)
         x2 = int(x_center + width / 2)
         y2 = int(y_center + height / 2)
-        cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
-        label = f"{cls_id}" if class_names is None else class_names.get(cls_id, str(cls_id))
-        cv2.putText(img, label, (x1, max(y1-5, 0)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
+        # 使用与模型检测一致的样式
+        cls_name = str(cls_id) if class_names is None else class_names.get(cls_id, str(cls_id))
+        # 框颜色: 红色 (与模型检测默认颜色一致)
+        color = (255, 0, 0)
+        # 绘制矩形框
+        cv2.rectangle(img, (x1, y1), (x2, y2), color, 2)
+        # 绘制标签背景
+        (text_width, text_height), baseline = cv2.getTextSize(cls_name, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
+        cv2.rectangle(img, (x1, y1 - text_height - 5), (x1 + text_width, y1), color, -1)
+        # 绘制标签文字
+        cv2.putText(img, cls_name, (x1, y1 - 3), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
     return img
 
 def compute_iou(box1, box2):

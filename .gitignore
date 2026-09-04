@@ -29,6 +29,7 @@ ENV/
 # IDE
 .idea/
 .vscode/
+.agnes
 *.swp
 *.swo
 *~
@@ -55,3 +56,4 @@ runs/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+_backup
