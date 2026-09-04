@@ -1,0 +1,52 @@
+{
+    "detect": {
+        "model1": "E:/code/MultipleCameras/runs/detect/yolo26s-11/weights/best.pt",
+        "model2": "E:/code/MultipleCameras/runs/detect/yolo26s-9/weights/best.pt",
+        "img_dir": "D:/1_code/dataset/data/images/auto_save",
+        "label_dir": "D:/1_code/dataset/data/labels/auto_save",
+        "conf": 0.25,
+        "iou": 0.45,
+        "imgsz": 640,
+        "max_det": 300,
+        "classes": "0,1,2",
+        "quantize": 16,
+        "augment": false,
+        "stream": false,
+        "batch_mode": true,
+        "mode_single": false,
+        "mode_single_label": false,
+        "mode_dual": true,
+        "device": "0"
+    },
+    "train": {
+        "model_path": "E:/code/MultipleCameras/models/yolo26s.pt",
+        "data_yaml": "D:/1_code/dataset/data/airphone.yaml",
+        "project": "E:/code/yolo26gui/runs",
+        "name": "exp",
+        "epochs": 3000,
+        "imgsz": 640,
+        "workers": 8,
+        "batch": 6,
+        "device": "0",
+        "hflip": 0.1,
+        "vflip": 0.1,
+        "degrees": 10.0,
+        "mosaic": 0.0,
+        "mixup": 0.0,
+        "hsv_h": 0.01,
+        "hsv_s": 0.7,
+        "hsv_v": 0.4,
+        "box": 7.5,
+        "cls": 0.5,
+        "dfl": 1.5,
+        "cache": true,
+        "patience": 200
+    },
+    "format": {
+        "model_path": "",
+        "format_onnx": true,
+        "half": false,
+        "device": "0",
+        "imgsz": 640
+    }
+}

@@ -1,0 +1,78 @@
+# ============================================================
+# YOLO Detection and Training GUI - Dependencies
+# ============================================================
+# Python >= 3.8 recommended
+# Windows 10/11 recommended
+# ============================================================
+
+# ------------------------- Core Dependencies -------------------------
+PyQt5>=5.15.0          # Modern GUI framework
+PyQt5-sip>=12.0.0      # PyQt5 Python bindings
+ultralytics>=8.0.0     # YOLO object detection framework
+opencv-python>=4.5.0   # Computer vision library
+numpy>=1.20.0          # Numerical computing
+Pillow>=9.0.0          # Image processing
+
+# ------------------------- Deep Learning -------------------------
+torch>=2.0.0           # PyTorch deep learning framework
+torchvision>=0.15.0    # PyTorch computer vision tools
+
+# ------------------------- Optional Dependencies -------------------------
+# Uncomment based on your needs:
+
+# For ONNX export support:
+# onnx>=1.12.0
+# onnxruntime>=1.12.0
+# onnxruntime-gpu>=1.12.0  # GPU acceleration (optional)
+
+# For TensorRT export support:
+# tensorrt>=8.0.0
+# polygraphy>=0.40.0
+
+# For advanced training features:
+# albumentations>=1.0.0  # Advanced data augmentation
+# tensorboard>=2.10.0    # Training visualization
+
+# For YAML configuration:
+# pyyaml>=6.0
+
+# ------------------------- Installation Commands -------------------------
+#
+# Basic installation (recommended for most users):
+#   pip install -r requirements.txt
+#
+# With CUDA support (NVIDIA GPU users):
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+#   pip install -r requirements.txt
+#
+# CPU-only installation:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+#   pip install -r requirements.txt
+#
+# Using conda (recommended for Windows):
+#   conda create -n yolo-gui python=3.9
+#   conda activate yolo-gui
+#   pip install -r requirements.txt
+#
+# ------------------------- Version Notes -------------------------
+#
+# PyTorch versions:
+# - CUDA 11.8: torch+cu118
+# - CUDA 12.1: torch+cu121
+# - CPU-only: torch+cpu
+#
+# Check your CUDA version:
+#   python -c "import torch; print(torch.cuda.is_available(), torch.version.cuda)"
+#
+# ------------------------- Troubleshooting -------------------------
+#
+# If you encounter dependency conflicts:
+#   pip install --upgrade pip
+#   pip install --upgrade -r requirements.txt
+#
+# For specific version requirements:
+#   pip install PyQt5==5.15.9
+#   pip install ultralytics==8.0.1
+#   pip install opencv-python==4.8.0.76
+#
+# ============================================================
