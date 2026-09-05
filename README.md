@@ -84,16 +84,9 @@ C:\ProgramData\miniconda3\envs\pyqt-yolo\python.exe app_v4.py
 ```
 YOLO-pt-testing-GUI/
 ├── app_v4.py              # Main application (modern UI version)
-├── main_detect.ui         # Qt Designer UI file (optional)
-├── yolo_detect_professional_4.py  # Original v4 implementation
-├── yolo_detect_professional_3.py  # Original v3 implementation
-├── yolo_detect_professional_2.py  # Original v2 implementation
-├── yolo_detect_professional.py   # Original implementation
-├── yolo_detect.py          # Base implementation
 ├── app_config.json         # Application configuration (auto-generated)
 ├── requirements.txt        # Python dependencies
-├── README.md              # This file
-└── 启动_UI版本.bat        # Windows startup script
+└── README.md              # This file
 ```
 
 ## 🔧 Configuration
