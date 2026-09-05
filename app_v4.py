@@ -19,12 +19,13 @@ from pathlib import Path
 import cv2
 import numpy as np
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
+
 from PyQt5.QtGui import QPixmap, QImage, QKeyEvent
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QHBoxLayout,
     QLabel, QPushButton, QFileDialog, QLineEdit, QSpinBox, QDoubleSpinBox,
     QCheckBox, QRadioButton, QButtonGroup, QComboBox, QProgressBar, QTextEdit,
-    QGroupBox, QFormLayout, QMessageBox, QSplitter, QSizePolicy
+    QGroupBox, QFormLayout, QMessageBox, QSplitter, QSizePolicy, QScrollArea
 )
 
 # 尝试导入 ultralytics
@@ -379,12 +380,12 @@ def draw_labels_on_image(img_bgr, label_path, class_names=None):
         # 框颜色: 红色 (与模型检测默认颜色一致)
         color = (255, 0, 0)
         # 绘制矩形框
-        cv2.rectangle(img, (x1, y1), (x2, y2), color, 2)
+        cv2.rectangle(img, (x1, y1), (x2, y2), color, 5)
         # 绘制标签背景
         (text_width, text_height), baseline = cv2.getTextSize(cls_name, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
         cv2.rectangle(img, (x1, y1 - text_height - 5), (x1 + text_width, y1), color, -1)
         # 绘制标签文字
-        cv2.putText(img, cls_name, (x1, y1 - 3), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+        cv2.putText(img, cls_name, (x1, y1 - 3), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255), 4)
     return img
 
 def compute_iou(box1, box2):
@@ -1146,7 +1147,7 @@ class TrainTab(QWidget):
         data_layout.addWidget(self.btn_yaml_select)
         main_layout.addWidget(data_group)
 
-        # 项目设置
+        # 项目设置 - 添加滚动条
         project_group = QGroupBox("项目设置")
         project_form = QFormLayout(project_group)
         self.edit_project_dir = QLineEdit()
@@ -1186,9 +1187,15 @@ class TrainTab(QWidget):
         for dev in get_available_devices():
             self.combo_device_train.addItem(dev)
         project_form.addRow("设备:", self.combo_device_train)
-        main_layout.addWidget(project_group)
+        
+        # 为项目设置添加滚动条
+        project_scroll = QScrollArea()
+        project_scroll.setWidget(project_group)
+        project_scroll.setWidgetResizable(True)
+        project_scroll.setMaximumHeight(300)
+        main_layout.addWidget(project_scroll)
 
-        # 数据增强
+        # 数据增强 - 添加滚动条
         aug_group = QGroupBox("数据增强")
         aug_form = QFormLayout(aug_group)
         self.spin_hflip = QDoubleSpinBox()
@@ -1220,9 +1227,15 @@ class TrainTab(QWidget):
         self.spin_mixup.setSingleStep(0.05)
         self.spin_mixup.setValue(0.0)
         aug_form.addRow("mixup增强:", self.spin_mixup)
-        main_layout.addWidget(aug_group)
+        
+        # 为数据增强添加滚动条
+        aug_scroll = QScrollArea()
+        aug_scroll.setWidget(aug_group)
+        aug_scroll.setWidgetResizable(True)
+        aug_scroll.setMaximumHeight(200)
+        main_layout.addWidget(aug_scroll)
 
-        # 颜色空间增强
+        # 颜色空间增强 - 添加滚动条
         color_group = QGroupBox("颜色空间增强")
         color_form = QFormLayout(color_group)
         self.spin_hsv_h = QDoubleSpinBox()
@@ -1242,9 +1255,15 @@ class TrainTab(QWidget):
         self.spin_hsv_v.setSingleStep(0.05)
         self.spin_hsv_v.setValue(0.4)
         color_form.addRow("hsv-value偏移:", self.spin_hsv_v)
-        main_layout.addWidget(color_group)
+        
+        # 为颜色空间增强添加滚动条
+        color_scroll = QScrollArea()
+        color_scroll.setWidget(color_group)
+        color_scroll.setWidgetResizable(True)
+        color_scroll.setMaximumHeight(150)
+        main_layout.addWidget(color_scroll)
 
-        # 损失权重
+        # 损失权重 - 添加滚动条
         loss_group = QGroupBox("损失权重")
         loss_form = QFormLayout(loss_group)
         self.spin_box_loss = QDoubleSpinBox()
@@ -1261,7 +1280,13 @@ class TrainTab(QWidget):
         self.spin_dfl_loss.setRange(0.0, 100.0)
         self.spin_dfl_loss.setValue(1.5)
         loss_form.addRow("DFL损失权重:", self.spin_dfl_loss)
-        main_layout.addWidget(loss_group)
+        
+        # 为损失权重添加滚动条
+        loss_scroll = QScrollArea()
+        loss_scroll.setWidget(loss_group)
+        loss_scroll.setWidgetResizable(True)
+        loss_scroll.setMaximumHeight(150)
+        main_layout.addWidget(loss_scroll)
 
         # 其他设置
         other_group = QGroupBox("其他设置")

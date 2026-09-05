@@ -9,7 +9,7 @@
         "imgsz": 640,
         "max_det": 300,
         "classes": "0,1,2",
-        "quantize": 16,
+        "quantize": 8,
         "augment": false,
         "stream": false,
         "batch_mode": true,
